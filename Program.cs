@@ -4,6 +4,9 @@ var app = builder.Build();
 // diccionario para guardar
 var memoryDB = new Dictionary<string, string>();
 
+app.UseDefaultFiles(); // buscar automaticamente el archivo index.html
+app.UseStaticFiles(); // permite servir archivos de la carpeta wwwroot
+
 // endpoint para acortar la url
 app.MapPost("/shorten", (CreateUrlRequest petition) =>
 {
@@ -34,8 +37,6 @@ app.MapGet("/{code}", (string code) =>
     // si no existe, devolvemos un error 404
     return Results.NotFound("El codigo no existe") ;
 });
-
-app.MapGet("/", () => "Hola");
 
 app.Run();
 

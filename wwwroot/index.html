@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acortador de URLs</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background-color: #0d0e15; color: #f3f4f6 }
+    .electric-glow { box-shadow: 0 0 20px rgba(139, 92, 246, 0.4); }
+  </style>
+</head>
+<body class="flex items-center justify-center min-h-screen font-sans">
+  <div class="w-full max-w-md p-8 bg-slate-900 border border-violet-900/40 rounded-2xl electric-glow">
+    <h1 class="text-3xl font-extrabold text-center tracking-tight bg-gradient-to-r from-violet-400 to-fuchsia-500 bg-clip-text text-transparent mb-2 ">
+      Mauve Link
+    </h1>
+    <p class="text-cs text-center text-slate-400 mb-8 font-mono">Acortador de URLs</p>
+
+    <div class="space-y-4">
+      <div>
+        <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2" for="urlInput">Introduce tu URL aqui</label>
+        <input type="url" id="urlInput" placeholder="https://ejemplo.com/un-link-larguisimo..." class="w-full px-4 py-3 bg-slate-950 border border-slate-800 rounded-xl focus:outline-none focus:border-violet-500 text-slate-200 transition-colors">
+      </div>
+
+      <button onclick="processUrl()" class="w-full py-3 bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 font-bold rounded-xl transition-all shadow-lg shadow-violet-900/30 active:scale-[0.98]">Acortar Enlace
+      </button>
+    </div>
+
+    <div id="result" class="mt-8 pt-6 border-t border-slate-800/60 hidden">
+            <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2" for="">¡Listo! Aquí tienes tu link corto:</label>
+            <div class="flex gap-2">
+                <input type="text" id="shortUrl" readonly class="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-violet-400 font-mono text-sm focus:outline-none" />
+                <button onclick="copyLink()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 font-medium text-sm rounded-lg transition-colors">
+                    Copiar
+                </button>
+            </div>
+        </div>
+  </div>
+
+  <script>
+    async function processUrl() {
+      const longUrl = document.getElementById('urlInput').value;
+      if(!longUrl) return alert('Por favor, escribe una URL');
+
+      // Se llama a la API .NET
+      const response = await fetch('/shorten', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ longUrl: longUrl })
+      });
+
+      if(response.ok) {
+        const data = await response.json();
+
+        // se muestra el resultado
+        document.getElementById('shortUrl').value = data.shortUrl;
+        document.getElementById('result').classList.remove('hidden');
+      } else {
+        alert('Hubo un error al acortar la URL');
+      }
+    }
+
+    function copyLink() {
+      const input = document.getElementById('shortUrl');
+      input.select();
+      document.execCommand('copy');
+      alert("Copiado al portapapeles")
+    }
+  </script>
+  
+</body>
+</html>
