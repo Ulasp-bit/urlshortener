@@ -12,6 +12,6 @@ WORKDIR /app
 COPY --from=build /app/out .
 
 EXPOSE 8080
-ENV ASPNETCORE_URLS=https://+:8080
+ENV ASPNETCORE_URLS=http://+:8080
 
 ENTRYPOINT ["dotnet", "UrlShort.dll"]
