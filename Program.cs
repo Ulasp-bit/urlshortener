@@ -19,7 +19,7 @@ app.MapPost("/shorten", (CreateUrlRequest petition) =>
     memoryDB[shortCode] = petition.LongUrl;
 
     // devolver el codigo al usuario
-    return Results.Ok(new { Code = shortCode, shortUrl = $"https://localhost:5067/{shortCode}"});
+    return Results.Ok(new { Code = shortCode, shortUrl = $"https://urlshortener-ulaspbit.onrender.com/{shortCode}"});
 });
 
 app.MapGet("/{code}", (string code) =>
