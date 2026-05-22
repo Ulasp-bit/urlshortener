@@ -1,9 +1,0 @@
-HTTP
-
-### Crear una URL corta
-POST http://localhost:5067/shorten
-Content-Type: application/json
-
-{
-    "LongUrl": "https://www.google.com"
-}

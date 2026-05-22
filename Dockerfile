@@ -14,4 +14,4 @@ COPY --from=build /app/out .
 EXPOSE 8080
 ENV ASPNETCORE_URLS=https://+:8080
 
-ENTRYPOINT ["dotnet", "UrlShortener.dll"]
+ENTRYPOINT ["dotnet", "UrlShort.dll"]
