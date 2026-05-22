@@ -1,2 +1,2 @@
 # urlshortener
-Url Shortener with .NET 10
+Url Shortener with .NET 9
